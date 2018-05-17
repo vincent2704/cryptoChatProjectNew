@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import sockets.Client;
 import sockets.Server;
 
@@ -225,6 +226,22 @@ public class ChatWindowFunc {
 //		dbc.addMessageToDB(Main.nickname, messageBox.getText(), currentDate, crypto);
 //		messageBox.setText("");
 //		tempDate = currentDate;
+	}
+
+	public void chooseFile() {
+		FileChooser fc = new FileChooser();
+		ExtensionFilter extFilterJPG = new ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+		ExtensionFilter extFilterPNG = new ExtensionFilter("PNG files (*.png)", "*.PNG");
+		fc.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+		File selectedFile = fc.showOpenDialog(SwitchScene.getStage());
+		String fileName = selectedFile.getName();
+		if (selectedFile != null) {
+			view.btnChooseFile.setText(fileName);
+			view.lvAttachments.getItems().add(selectedFile.getAbsolutePath());
+			System.out.println(view.lvAttachments);
+		} else {
+			AlertBox.showAndWait(AlertType.ERROR, "", "File selection error!");
+		}
 	};
 	
 }
