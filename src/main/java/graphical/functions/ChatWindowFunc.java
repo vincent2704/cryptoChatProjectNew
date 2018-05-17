@@ -85,7 +85,7 @@ public class ChatWindowFunc {
 
 		hb.getChildren().addAll(lbUser, lbMessage);
 		vbMessage.getChildren().addAll(hb, lbDate);
-		ChatWindow.vbChatBox.getChildren().add(vbMessage);
+		view.vbChatBox.getChildren().add(vbMessage);
 		
 		view.setIsChatBoxEmpty(false);
 	}
@@ -123,7 +123,7 @@ public class ChatWindowFunc {
 		printDate.setId("printDate");
 		printDate.setMinWidth(ChatWindow.CHAT_WIDTH - 40);
 		printDate.setAlignment(Pos.CENTER);
-		ChatWindow.vbChatBox.getChildren().add(printDate);
+		view.vbChatBox.getChildren().add(printDate);
 		view.setIsChatBoxEmpty(false);
 	}
 	
@@ -134,7 +134,7 @@ public class ChatWindowFunc {
 		userLogged.setMinWidth(ChatWindow.CHAT_WIDTH - 40);
 		userLogged.setAlignment(Pos.CENTER_LEFT);
 		userLogged.setPadding(new Insets(10, 20, 10, 20));
-		ChatWindow.vbChatBox.getChildren().add(userLogged);
+		view.vbChatBox.getChildren().add(userLogged);
 		view.setIsChatBoxEmpty(false);
 	}
 

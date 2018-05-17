@@ -39,10 +39,9 @@ public class Server {
 						if (inputLine.contains("+")) {
 							String receiveNick = inputLine.substring(0, inputLine.indexOf("+"));
 							String receiveMessage = inputLine.substring(inputLine.indexOf("+")+1);
-						func.addMessageToChatBox(receiveNick, receiveMessage);
+							func.addMessageToChatBox(receiveNick, receiveMessage);
 						}
-						else
-						{
+						else{
 							func.addUserLoggedToChatBox(inputLine);
 						}
 					});

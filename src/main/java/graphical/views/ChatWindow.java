@@ -45,7 +45,7 @@ public class ChatWindow extends BorderPane {
 	private Button btnSendFile;
 	private Button btnBack;
 	private HBox hbSendFile, buttonsEncrypt;
-	public static VBox vbChatBox;
+	public VBox vbChatBox;
 	private VBox vb, areaLogo, areaFile, areaEncrypt, areaRight;
 	private ScrollPane spChatBox;
 	private CheckBox chbEncrypt;
