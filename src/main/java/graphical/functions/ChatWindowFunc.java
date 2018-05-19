@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import sockets.Client;
 import sockets.Server;
 
@@ -59,6 +60,8 @@ public class ChatWindowFunc {
 	}
 	
 	public void addMessageToChatBox(String username, String message) {
+		this.printingDate();
+		
 		Date currentDate = new Date();
 
 		Format formatter = new SimpleDateFormat("HH:mm");
@@ -84,7 +87,7 @@ public class ChatWindowFunc {
 
 		hb.getChildren().addAll(lbUser, lbMessage);
 		vbMessage.getChildren().addAll(hb, lbDate);
-		ChatWindow.vbChatBox.getChildren().add(vbMessage);
+		view.vbChatBox.getChildren().add(vbMessage);
 		
 		view.setIsChatBoxEmpty(false);
 	}
@@ -122,18 +125,27 @@ public class ChatWindowFunc {
 		printDate.setId("printDate");
 		printDate.setMinWidth(ChatWindow.CHAT_WIDTH - 40);
 		printDate.setAlignment(Pos.CENTER);
-		ChatWindow.vbChatBox.getChildren().add(printDate);
+		printDate.setPadding(new Insets(10, 20, 10, 20));
+		view.vbChatBox.getChildren().add(printDate);
 		view.setIsChatBoxEmpty(false);
 	}
 	
 	public void addUserLoggedToChatBox(String message) {
 		this.printingDate();
+		Date currentDate = new Date();
+		Format formatter = new SimpleDateFormat("HH:mm");
+		String formatDate = formatter.format(currentDate);
+		HBox hb = new HBox();
+		hb.setPadding(new Insets(5, 10, 5, 20));
 		Label userLogged = new Label(message);
 		userLogged.setId("userLogged");
-		userLogged.setMinWidth(ChatWindow.CHAT_WIDTH - 40);
+		userLogged.setMinWidth(ChatWindow.CHAT_WIDTH - 90);
 		userLogged.setAlignment(Pos.CENTER_LEFT);
-		userLogged.setPadding(new Insets(10, 20, 10, 20));
-		ChatWindow.vbChatBox.getChildren().add(userLogged);
+		Label lbDate = new Label(formatDate);
+		lbDate.setId("lbDate");
+		lbDate.setAlignment(Pos.CENTER_RIGHT);
+		hb.getChildren().addAll(userLogged, lbDate);
+		view.vbChatBox.getChildren().add(hb);
 		view.setIsChatBoxEmpty(false);
 	}
 
@@ -225,6 +237,22 @@ public class ChatWindowFunc {
 //		dbc.addMessageToDB(Main.nickname, messageBox.getText(), currentDate, crypto);
 //		messageBox.setText("");
 //		tempDate = currentDate;
+	}
+
+	public void chooseFile() {
+		FileChooser fc = new FileChooser();
+		ExtensionFilter extFilterJPG = new ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+		ExtensionFilter extFilterPNG = new ExtensionFilter("PNG files (*.png)", "*.PNG");
+		fc.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+		File selectedFile = fc.showOpenDialog(SwitchScene.getStage());
+		String fileName = selectedFile.getName();
+		if (selectedFile != null) {
+			view.btnChooseFile.setText(fileName);
+			view.lvAttachments.getItems().add(selectedFile.getAbsolutePath());
+			System.out.println(view.lvAttachments);
+		} else {
+			AlertBox.showAndWait(AlertType.ERROR, "", "File selection error!");
+		}
 	};
 	
 }

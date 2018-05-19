@@ -1,5 +1,7 @@
 package graphical.views;
 
+import java.util.Set;
+
 import hibernate.dao.JPAConnection;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -26,11 +28,12 @@ public class SwitchScene {
 		
 		stage.setOnCloseRequest(e -> {
 			// TODO
-			JPAConnection.closeJPAConnection();
 			e.consume();
 			Platform.runLater(() -> {
 				if (AlertBox.showAndWait(AlertType.CONFIRMATION, "", "Do you exit Chat?")
 						.orElse(ButtonType.CANCEL) == ButtonType.OK) {
+					JPAConnection.closeJPAConnection();
+					closeAllProcesses();
 					stage.close();
 				}
 			});
@@ -38,6 +41,17 @@ public class SwitchScene {
 		});
 	}
 
+	 /**
+     * Interrupts all currently running threads to ensure that receive method is killed.
+     */
+    private void closeAllProcesses() {
+        JPAConnection.closeJPAConnection();
+        Set<Thread> threads = Thread.getAllStackTraces().keySet();
+        threads.forEach(t ->{
+            t.interrupt();
+        });
+    }
+	
 	public void goToLogin() {
 		if (lgWin == null) {
 			lgWin = new LoginWindow();

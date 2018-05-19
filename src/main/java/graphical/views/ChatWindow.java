@@ -1,13 +1,11 @@
 package graphical.views;
 
-import java.io.File;
 import java.util.Date;
 
 import graphical.functions.ChatWindowFunc;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
@@ -30,7 +28,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import main.Main;
 //import hibernate.entities.User;
@@ -44,9 +41,11 @@ public class ChatWindow extends BorderPane {
 	private GridPane gp;
 	private Label lbUsers, lbChat, lbFile, lbEncrypt;
 	private TextField tfMessage, tfEncrypt;
-	private Button btnChooseFile, btnSendFile, btnBack;
+	public Button btnChooseFile;
+	private Button btnSendFile;
+	private Button btnBack;
 	private HBox hbSendFile, buttonsEncrypt;
-	public static VBox vbChatBox;
+	public VBox vbChatBox;
 	private VBox vb, areaLogo, areaFile, areaEncrypt, areaRight;
 	private ScrollPane spChatBox;
 	private CheckBox chbEncrypt;
@@ -169,19 +168,7 @@ public class ChatWindow extends BorderPane {
 		btnChooseFile = new Button("choose image file");
 		btnChooseFile.setPrefWidth(250);
 		btnChooseFile.setOnAction(e -> {
-			FileChooser fc = new FileChooser();
-			FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
-            FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
-            fc.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
-			File selectedFile = fc.showOpenDialog(SwitchScene.getStage());
-			String fileName = selectedFile.getName();
-			if (selectedFile != null) {
-				btnChooseFile.setText(fileName);
-				lvAttachments.getItems().add(selectedFile.getAbsolutePath());
-				System.out.println(lvAttachments);
-			} else {
-				AlertBox.showAndWait(AlertType.ERROR, "", "File selection error!");
-			}
+			func.chooseFile();
 		});
 
 		btnSendFile = new Button("send");

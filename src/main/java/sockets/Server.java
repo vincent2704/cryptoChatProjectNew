@@ -35,21 +35,26 @@ public class Server {
 			while ((inputLine = in.readLine()) != null) {
 				System.out.println("Received message: " + inputLine + " from " + clientSocket.toString());
 				pw.println(inputLine);
-					Platform.runLater(() -> {
-						if (inputLine.contains("+")) {
-							String receiveNick = inputLine.substring(0, inputLine.indexOf("+"));
-							String receiveMessage = inputLine.substring(inputLine.indexOf("+")+1);
-						func.addMessageToChatBox(receiveNick, receiveMessage);
-						}
-						else
-						{
-							func.addUserLoggedToChatBox(inputLine);
-						}
-					});
+					setKindOfMessage();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void setKindOfMessage() {
+		Platform.runLater(() -> {
+			if (inputLine.contains("+")) {
+				String receiveNick = inputLine.substring(0, inputLine.indexOf("+"));
+				String receiveMessage = inputLine.substring(inputLine.indexOf("+")+1);
+				func.addMessageToChatBox(receiveNick, receiveMessage);
+			}
+			else{
+				if (inputLine.substring(0, 2).equals("$1")) {System.out.println("$1");}
+				if (inputLine.substring(0, 2).equals("$2")) ;
+				else func.addUserLoggedToChatBox(inputLine);
+			}
+		});
 	}
 
 	public void concurrentReceive() {
