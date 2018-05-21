@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import main.Main;
 import sockets.Client;
 import sockets.Server;
 
@@ -148,7 +149,18 @@ public class ChatWindowFunc {
 		view.vbChatBox.getChildren().add(hb);
 		view.setIsChatBoxEmpty(false);
 	}
-
+	
+	public void addUserToUserBox(String username) {
+		if (!Main.olNames.contains(username)) {
+			Main.olNames.add(username);
+		}
+	}
+	
+	public void removeUserFromUserBox(String username) {
+		if (Main.olNames.contains(username)) {
+			Main.olNames.remove(username);
+		}
+	}
 	
 	// metoda do poprawy (stara wersja dzialajaca)
 	public void loadHistory() {

@@ -1,5 +1,7 @@
 package hibernate.dao;
 
+import java.net.ConnectException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -9,6 +11,7 @@ import graphical.views.SwitchScene;
 import hibernate.entities.User;
 import javafx.scene.control.Alert.AlertType;
 import main.Main;
+import sockets.Client;
 
 public class UserDAO {
 
@@ -54,6 +57,14 @@ public class UserDAO {
 			}
 			SwitchScene sc = Main.getSwitchScene();
 			sc.goToChat();
+			Client.send("$1" + Main.nickname);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Client.send("$3");
 		} else {
 			AlertBox.showAndWait(AlertType.ERROR, "User not exist!", "Check login and password you entered!");
 		}

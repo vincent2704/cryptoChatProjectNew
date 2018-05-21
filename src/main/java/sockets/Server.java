@@ -49,10 +49,23 @@ public class Server {
 				String receiveMessage = inputLine.substring(inputLine.indexOf("+")+1);
 				func.addMessageToChatBox(receiveNick, receiveMessage);
 			}
-			else{
-				if (inputLine.substring(0, 2).equals("$1")) {System.out.println("$1");}
-				if (inputLine.substring(0, 2).equals("$2")) ;
-				else func.addUserLoggedToChatBox(inputLine);
+			else {
+				if (inputLine.substring(0, 2).equals("$1")) {
+					func.addUserToUserBox(inputLine.substring(2));
+					func.addUserLoggedToChatBox("user " + inputLine.substring(2) + " logged in to cryptochat");
+				}
+				if (inputLine.substring(0, 2).equals("$2")) {
+					func.removeUserFromUserBox(inputLine.substring(2));
+					func.addUserLoggedToChatBox("user " + inputLine.substring(2) + " logged out from cryptochat");
+				}
+				if (inputLine.substring(0, 2).equals("$3")) {
+					Client.send("$4" + Main.nickname);
+					System.out.println("$3");
+				}
+				if (inputLine.substring(0, 2).equals("$4")) {
+					func.addUserToUserBox(inputLine.substring(2));
+					System.out.println("$4");
+				}
 			}
 		});
 	}

@@ -80,7 +80,7 @@ public class RegisterWindow extends BorderPane {
 		tfUser = new TextField();
 		tfUser.setOnKeyTyped(e -> {
             char inputChar = e.getCharacter().charAt(0);
-            if (inputChar=='+') {
+            if (inputChar=='+' || inputChar=='$') {
                 e.consume();
             }
         });

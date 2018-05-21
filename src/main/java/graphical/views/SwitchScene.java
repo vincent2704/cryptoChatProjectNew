@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import main.Main;
+import sockets.Client;
 
 public class SwitchScene {
 
@@ -32,6 +34,8 @@ public class SwitchScene {
 			Platform.runLater(() -> {
 				if (AlertBox.showAndWait(AlertType.CONFIRMATION, "", "Do you exit Chat?")
 						.orElse(ButtonType.CANCEL) == ButtonType.OK) {
+					//Client.userLoggedOut();
+					Client.send("$2" + Main.nickname);
 					JPAConnection.closeJPAConnection();
 					closeAllProcesses();
 					stage.close();

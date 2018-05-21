@@ -1,12 +1,13 @@
 package sockets;
 
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 
 import main.Main;
 
 public class Client {
-	private static Socket socket;
+	public static Socket socket;
 	private static PrintWriter pw;
 
 	/**
@@ -41,7 +42,18 @@ public class Client {
 			createClient();
 		if (Main.nickname != null)
 			try {
-				pw.println("user " + Main.nickname + " logged in to chat");
+				pw.println("user " + Main.nickname + " logged in to cryptochat");
+			} catch (Exception exc) {
+
+			}
+	}
+	
+	public static void userLoggedOut() {
+		if (socket == null)
+			createClient();
+		if (Main.nickname != null)
+			try {
+				pw.println("user " + Main.nickname + " logged out from cryptochat");
 			} catch (Exception exc) {
 
 			}

@@ -31,6 +31,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser.ExtensionFilter;
 import main.Main;
 //import hibernate.entities.User;
+import sockets.Client;
 
 public class ChatWindow extends BorderPane {
 
@@ -210,6 +211,14 @@ public class ChatWindow extends BorderPane {
 		btnBack = new Button("back");
 		btnBack.setId("btnBack");
 		btnBack.setOnAction(e -> {
+			func.removeUserFromUserBox(Main.nickname);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			Client.send("$2" + Main.nickname);
 			SwitchScene sc = Main.getSwitchScene();
 			sc.goToLogin();
 		});
@@ -220,7 +229,7 @@ public class ChatWindow extends BorderPane {
 		rowConstr3 = new RowConstraints();
 		rowConstr3.setMaxHeight(30);
 		gp.getRowConstraints().addAll(rowConstr1, rowConstr2, rowConstr3);
-
+		
 		return gp;
 
 	}

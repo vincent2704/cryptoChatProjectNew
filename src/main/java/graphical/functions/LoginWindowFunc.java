@@ -2,6 +2,8 @@ package graphical.functions;
 
 import graphical.views.LoginWindow;
 import hibernate.dao.UserDAO;
+import javafx.application.Platform;
+import main.Main;
 import sockets.Client;
 
 public class LoginWindowFunc {
@@ -19,7 +21,7 @@ public class LoginWindowFunc {
 	 */
 	public void login() {
 		udao.login(view.getUsername(), view.getUserPassword());
-		Client.userLoggedIn();
+		//Client.userLoggedIn();
 	}
 	
 }
