@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -96,7 +97,7 @@ public class ChatWindowFunc {
 						newStage = new Stage();
 						Scene scene = new Scene(setEncryptedPane(), 230, 120);
 						newStage.setScene(scene);
-						newStage.setAlwaysOnTop(true);
+						//newStage.setAlwaysOnTop(true);
 						newStage.initModality(Modality.APPLICATION_MODAL);
 						newStage.showAndWait();
 					}
@@ -126,16 +127,15 @@ public class ChatWindowFunc {
 		pfEncryptedKey.setPromptText("enter decryption key");
 		pfEncryptedKey
 				.setStyle("-fx-text-fill: black; -fx-prompt-text-fill: rgb(186, 180, 180); -fx-border-color: black;");
+		pfEncryptedKey.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.ENTER) showEncryptedMessageAlert();
+		});
 
 		btnEncryptedKey = new Button("decrypt");
 		btnEncryptedKey.setStyle(
 				"-fx-font-weight: bold; -fx-border-color: black; -fx-text-fill: black; -fx-background-color: rgb(229, 224, 224);");
 		btnEncryptedKey.setOnAction(e -> {
-			newStage.close();
-			if (pfEncryptedKey.getText().equals(view.alKey.get(index)))
-				AlertBox.showAndWait(AlertType.INFORMATION, "decrypt message: ", view.alMessage.get(index));
-			else
-				AlertBox.showAndWait(AlertType.ERROR, "invalid key", "the message has not been decrypted");
+			showEncryptedMessageAlert();
 		});
 
 		vb = new VBox(pfEncryptedKey, btnEncryptedKey);
@@ -146,6 +146,14 @@ public class ChatWindowFunc {
 
 		return fp;
 
+	}
+
+	private void showEncryptedMessageAlert() {
+		newStage.close();
+		if (pfEncryptedKey.getText().equals(view.alKey.get(index)))
+			AlertBox.showAndWait(AlertType.INFORMATION, "decrypt message: ", view.alMessage.get(index));
+		else
+			AlertBox.showAndWait(AlertType.ERROR, "invalid key", "the message has not been decrypted");
 	}
 
 	public void printingDate() {

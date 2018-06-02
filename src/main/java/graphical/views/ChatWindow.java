@@ -126,6 +126,12 @@ public class ChatWindow extends BorderPane {
 		tfMessage.setFocusTraversable(true);
 		tfMessage.setPromptText("type here your message");
 		gp.add(tfMessage, 0, 2);
+		tfMessage.setOnKeyTyped(e -> {
+            char inputChar = e.getCharacter().charAt(0);
+            if (inputChar=='$') {
+                e.consume();
+            }
+        });
 		tfMessage.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				if (this.getEncryptionCheckbox())
