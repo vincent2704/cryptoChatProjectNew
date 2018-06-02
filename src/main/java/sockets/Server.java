@@ -9,7 +9,9 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import cryptography.StringMessageEncryption;
 import graphical.functions.ChatWindowFunc;
+import graphical.views.ChatWindow;
 import javafx.application.Platform;
 import main.Main;
 
@@ -35,7 +37,7 @@ public class Server {
 			while ((inputLine = in.readLine()) != null) {
 				System.out.println("Received message: " + inputLine + " from " + clientSocket.toString());
 				pw.println(inputLine);
-					setKindOfMessage();
+				setKindOfMessage();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -46,10 +48,22 @@ public class Server {
 		Platform.runLater(() -> {
 			if (inputLine.contains("+")) {
 				String receiveNick = inputLine.substring(0, inputLine.indexOf("+"));
-				String receiveMessage = inputLine.substring(inputLine.indexOf("+")+1);
-				func.addMessageToChatBox(receiveNick, receiveMessage);
-			}
-			else {
+				if (inputLine.contains("$")) {
+					String receiveEncryptedMessage = inputLine.substring(inputLine.indexOf("+") + 1,
+							inputLine.indexOf("$"));
+					String receiveEncryptedMessageKey = inputLine.substring(inputLine.indexOf("$") + 1);
+					ChatWindow.alMessage.add(receiveEncryptedMessage);
+					ChatWindow.alKey.add(receiveEncryptedMessageKey);
+					func.addMessageToChatBox(
+							receiveNick, "[encrypted message]:\n " + StringMessageEncryption
+									.encode(receiveEncryptedMessage, Integer.parseInt(receiveEncryptedMessageKey)),
+							true);
+
+				} else {
+					String receiveMessage = inputLine.substring(inputLine.indexOf("+") + 1);
+					func.addMessageToChatBox(receiveNick, receiveMessage, false);
+				}
+			} else {
 				if (inputLine.substring(0, 2).equals("$1")) {
 					func.addUserToUserBox(inputLine.substring(2));
 					func.addUserLoggedToChatBox("user " + inputLine.substring(2) + " logged in to cryptochat");
