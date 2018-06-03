@@ -1,9 +1,9 @@
 package graphical.views;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import graphical.functions.ChatWindowFunc;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,7 +28,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser.ExtensionFilter;
 import main.Main;
 //import hibernate.entities.User;
 import sockets.Client;
@@ -52,7 +51,6 @@ public class ChatWindow extends BorderPane {
 	private CheckBox chbEncrypt;
 	private RowConstraints rowConstr1, rowConstr2, rowConstr3;
 
-	
 	public ListView lvAvailableUsers;
 	public ListView<String> lvAttachments;
 
@@ -62,11 +60,13 @@ public class ChatWindow extends BorderPane {
 	public static Date dateOfJoinToChat;
 
 	// StringProperty textRecu = new SimpleStringProperty();
-	// public Date currentDate;
-	// public Date tempDate;
 
 	public final static int CHAT_WIDTH = 400;
 	public final static int CHAT_HEIGHT = 500;
+
+	public static ArrayList<Label> alLabel = new ArrayList<Label>();
+	public static ArrayList<String> alMessage = new ArrayList<String>();
+	public static ArrayList<String> alKey = new ArrayList<String>();
 
 	public ChatWindow() {
 		func = new ChatWindowFunc(this);
@@ -112,7 +112,7 @@ public class ChatWindow extends BorderPane {
 		lbUsers.setId("lbsChat");
 
 		vbChatBox = new VBox();
-		
+
 		spChatBox = new ScrollPane();
 		spChatBox.setPrefSize(CHAT_WIDTH, CHAT_HEIGHT);
 		spChatBox.setMaxSize(CHAT_WIDTH, CHAT_HEIGHT);
@@ -126,26 +126,25 @@ public class ChatWindow extends BorderPane {
 		tfMessage.setFocusTraversable(true);
 		tfMessage.setPromptText("type here your message");
 		gp.add(tfMessage, 0, 2);
+		tfMessage.setOnKeyTyped(e -> {
+            char inputChar = e.getCharacter().charAt(0);
+            if (inputChar=='$') {
+                e.consume();
+            }
+        });
 		tfMessage.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.ENTER) {
-				//if (tfEncrypt.getText() == "" && !chbEncrypt.isSelected()) {
-				func.sendMessage(Main.nickname + "+" + tfMessage.getText());
+				if (this.getEncryptionCheckbox())
+					func.sendMessage(Main.nickname + "+" + tfMessage.getText() + "$" + this.getEncryptionKey());
+				else
+					func.sendMessage(Main.nickname + "+" + tfMessage.getText());
 				func.printingDate();
-				func.addMessageToChatBox(Main.nickname, tfMessage.getText());
+				func.addMessageToChatBox(Main.nickname, tfMessage.getText(), false);
 				tfMessage.setText("");
-					// w poprzedniej wersji byl tu nastepujacy kod dzialajacy:
-					// func.addMessage(false);
-					// isChatBoxEmpty = false;
-				//}
-				// else {
-				// func.addMessage(true);
-				// }
 			}
 		});
 
-		
 		lvAvailableUsers = new ListView(Main.olNames);
-		//olNames.add(Main.nickname);
 		lvAvailableUsers.setCellFactory(ComboBoxListCell.forListView(Main.olNames));
 		lvAvailableUsers.setOnMouseClicked(e -> {
 			if (e.getButton().equals(MouseButton.PRIMARY)) {
@@ -154,7 +153,7 @@ public class ChatWindow extends BorderPane {
 				}
 			}
 		});
-		
+
 		Image imageLogo = new Image(ClassLoader.getSystemResourceAsStream("chat-logo.png"));
 		ImageView imageViewLogo = new ImageView(imageLogo);
 		imageViewLogo.setFitHeight(97);
@@ -189,12 +188,11 @@ public class ChatWindow extends BorderPane {
 		tfEncrypt = new TextField();
 		tfEncrypt.setPromptText("type encrypted code");
 		tfEncrypt.setOnKeyTyped(e -> {
-            char inputChar = e.getCharacter().charAt(0);
-            if (Character.isDigit(inputChar) != true) {
-                e.consume();
-            }
-        });
-
+			char inputChar = e.getCharacter().charAt(0);
+			if (Character.isDigit(inputChar) != true) {
+				e.consume();
+			}
+		});
 
 		buttonsEncrypt = new HBox(chbEncrypt, tfEncrypt);
 		buttonsEncrypt.setAlignment(Pos.CENTER_LEFT);
@@ -229,7 +227,7 @@ public class ChatWindow extends BorderPane {
 		rowConstr3 = new RowConstraints();
 		rowConstr3.setMaxHeight(30);
 		gp.getRowConstraints().addAll(rowConstr1, rowConstr2, rowConstr3);
-		
+
 		return gp;
 
 	}
