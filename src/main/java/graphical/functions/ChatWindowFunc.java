@@ -30,6 +30,8 @@ import javafx.stage.Stage;
 import main.Main;
 import sockets.Client;
 import sockets.Server;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 public class ChatWindowFunc {
 
