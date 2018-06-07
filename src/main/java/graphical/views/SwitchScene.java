@@ -29,7 +29,6 @@ public class SwitchScene {
 		SwitchScene.stage = stage;
 		
 		stage.setOnCloseRequest(e -> {
-			// TODO
 			e.consume();
 			Platform.runLater(() -> {
 				if (AlertBox.showAndWait(AlertType.CONFIRMATION, "", "Do you exit Chat?")

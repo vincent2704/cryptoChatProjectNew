@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -55,6 +56,22 @@ public class ChatWindowFunc {
 		server.concurrentReceive();
 	}
 
+	public void chooseFile() {
+		FileChooser fc = new FileChooser();
+		ExtensionFilter extFilterJPG = new ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+		ExtensionFilter extFilterPNG = new ExtensionFilter("PNG files (*.png)", "*.PNG");
+		fc.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+		File selectedFile = fc.showOpenDialog(SwitchScene.getStage());
+		String fileName = selectedFile.getName();
+		if (selectedFile != null) {
+			view.getBtnChooseFile().setText(fileName);
+			view.getLvAttachments().getItems().add(selectedFile.getAbsolutePath());
+			System.out.println(view.getLvAttachments());
+		} else {
+			AlertBox.showAndWait(AlertType.ERROR, "", "File selection error!");
+		}
+	}
+	
 	public void addAttachment() {
 		ListView<String> attachments = view.getLvAttachments();
 		FileChooser fc = new FileChooser();
@@ -67,64 +84,80 @@ public class ChatWindowFunc {
 		}
 	}
 
+	public void pressEnterToSendMessage(KeyEvent e) {
+		if (e.getCode() == KeyCode.ENTER) {
+			if (view.getEncryptionCheckbox())
+				sendMessage(Main.nickname + "+" + view.getTfMessage() + "$" + view.getEncryptionKey());
+			else
+				sendMessage(Main.nickname + "+" + view.getTfMessage());
+			printingDate();
+			addMessageToChatBox(Main.nickname, view.getTfMessage(), false);
+			view.setTfMessage("");
+		}
+	}
+	
+	public void clickBtnBack() {
+		removeUserFromUserBox(Main.nickname);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		Client.send("$2" + Main.nickname);
+		SwitchScene sc = Main.getSwitchScene();
+		sc.goToLogin();
+	}
+	
 	public void sendMessage(String message) {
 		Client.send(message);
 	}
 
 	public void addMessageToChatBox(String username, String message, boolean isEncrypted) {
-		this.printingDate();
-
+		printingDate();
 		Date currentDate = new Date();
-
 		Format formatter = new SimpleDateFormat("HH:mm");
 		String formatDate = formatter.format(currentDate);
-
 		VBox vbMessage = new VBox();
 		vbMessage.setPadding(new Insets(5));
 		vbMessage.setId("vbMessage");
-
 		HBox hb = new HBox();
 		Label lbUser = new Label(username + ": ");
 		lbUser.setId("lbUser");
-
 		Label lbMessage = new Label(message);
 		lbMessage.setId("lbMessage");
 		lbMessage.setMaxWidth(ChatWindow.CHAT_WIDTH - 75 - lbUser.getWidth());
-		if (isEncrypted) {
-			view.alLabel.add(lbMessage);
-			lbMessage.setOnMouseClicked(e -> {
-				if (e.getButton().equals(MouseButton.PRIMARY)) {
-					if (e.getClickCount() == 2) {
-						index = view.alLabel.indexOf(lbMessage);
-						newStage = new Stage();
-						Scene scene = new Scene(setEncryptedPane(), 230, 120);
-						newStage.setScene(scene);
-						//newStage.setAlwaysOnTop(true);
-						newStage.initModality(Modality.APPLICATION_MODAL);
-						newStage.showAndWait();
-					}
-				}
-			});
-		}
-
+		if (isEncrypted) createEncryptedMessageWindow(lbMessage);
 		Label lbDate = new Label(formatDate);
 		lbDate.setId("lbDate");
 		lbDate.setMinWidth(ChatWindow.CHAT_WIDTH - 60);
 		lbDate.setAlignment(Pos.TOP_RIGHT);
-
 		hb.getChildren().addAll(lbUser, lbMessage);
 		vbMessage.getChildren().addAll(hb, lbDate);
-		view.vbChatBox.getChildren().add(vbMessage);
-
+		view.getVbChatBox().getChildren().add(vbMessage);
 		view.setIsChatBoxEmpty(false);
 	}
 
-	private FlowPane setEncryptedPane() {
+	private void createEncryptedMessageWindow(Label lbMessage) {
+		view.alLabel.add(lbMessage);
+		lbMessage.setOnMouseClicked(e -> {
+			if (e.getButton().equals(MouseButton.PRIMARY)) {
+				if (e.getClickCount() == 2) {
+					index = view.alLabel.indexOf(lbMessage);
+					newStage = new Stage();
+					Scene scene = new Scene(setEncryptedPane(), 230, 120);
+					newStage.setScene(scene);
+					//newStage.setAlwaysOnTop(true);
+					newStage.initModality(Modality.APPLICATION_MODAL);
+					newStage.showAndWait();
+				}
+			}
+		});
+	}
 
+	private FlowPane setEncryptedPane() {
 		fp = new FlowPane();
 		fp.setPadding(new Insets(25, 25, 25, 25));
 		fp.setAlignment(Pos.CENTER);
-
 		pfEncryptedKey = new PasswordField();
 		pfEncryptedKey.setPromptText("enter decryption key");
 		pfEncryptedKey
@@ -132,22 +165,17 @@ public class ChatWindowFunc {
 		pfEncryptedKey.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.ENTER) showEncryptedMessageAlert();
 		});
-
 		btnEncryptedKey = new Button("decrypt");
 		btnEncryptedKey.setStyle(
 				"-fx-font-weight: bold; -fx-border-color: black; -fx-text-fill: black; -fx-background-color: rgb(229, 224, 224);");
 		btnEncryptedKey.setOnAction(e -> {
 			showEncryptedMessageAlert();
 		});
-
 		vb = new VBox(pfEncryptedKey, btnEncryptedKey);
 		vb.setSpacing(20);
 		vb.setAlignment(Pos.CENTER);
-
 		fp.getChildren().add(vb);
-
 		return fp;
-
 	}
 
 	private void showEncryptedMessageAlert() {
@@ -167,7 +195,7 @@ public class ChatWindowFunc {
 			if (!compareDates) {
 				ChatWindow.dateOfJoinToChat = new Date();
 			}
-			this.addDateToChatBox(new Date());
+			addDateToChatBox(new Date());
 		}
 	}
 
@@ -190,12 +218,12 @@ public class ChatWindowFunc {
 		printDate.setMinWidth(ChatWindow.CHAT_WIDTH - 40);
 		printDate.setAlignment(Pos.CENTER);
 		printDate.setPadding(new Insets(10, 20, 10, 20));
-		view.vbChatBox.getChildren().add(printDate);
+		view.getVbChatBox().getChildren().add(printDate);
 		view.setIsChatBoxEmpty(false);
 	}
 
 	public void addUserLoggedToChatBox(String message) {
-		this.printingDate();
+		printingDate();
 		Date currentDate = new Date();
 		Format formatter = new SimpleDateFormat("HH:mm");
 		String formatDate = formatter.format(currentDate);
@@ -209,7 +237,7 @@ public class ChatWindowFunc {
 		lbDate.setId("lbDate");
 		lbDate.setAlignment(Pos.CENTER_RIGHT);
 		hb.getChildren().addAll(userLogged, lbDate);
-		view.vbChatBox.getChildren().add(hb);
+		view.getVbChatBox().getChildren().add(hb);
 		view.setIsChatBoxEmpty(false);
 	}
 
@@ -314,21 +342,5 @@ public class ChatWindowFunc {
 		// messageBox.setText("");
 		// tempDate = currentDate;
 	}
-
-	public void chooseFile() {
-		FileChooser fc = new FileChooser();
-		ExtensionFilter extFilterJPG = new ExtensionFilter("JPG files (*.jpg)", "*.JPG");
-		ExtensionFilter extFilterPNG = new ExtensionFilter("PNG files (*.png)", "*.PNG");
-		fc.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
-		File selectedFile = fc.showOpenDialog(SwitchScene.getStage());
-		String fileName = selectedFile.getName();
-		if (selectedFile != null) {
-			view.btnChooseFile.setText(fileName);
-			view.lvAttachments.getItems().add(selectedFile.getAbsolutePath());
-			System.out.println(view.lvAttachments);
-		} else {
-			AlertBox.showAndWait(AlertType.ERROR, "", "File selection error!");
-		}
-	};
 
 }

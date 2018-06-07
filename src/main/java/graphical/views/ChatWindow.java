@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -29,7 +30,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import main.Main;
-//import hibernate.entities.User;
 import sockets.Client;
 
 public class ChatWindow extends BorderPane {
@@ -37,33 +37,26 @@ public class ChatWindow extends BorderPane {
 	private MenuBar menuBar;
 	private Menu menuChat;
 	private MenuItem menuLoadHistory, menuClearChat;
-
 	private GridPane gp;
 	private Label lbUsers, lbChat, lbFile, lbEncrypt;
 	private TextField tfMessage, tfEncrypt;
-	public Button btnChooseFile;
+	private Button btnChooseFile;
 	private Button btnSendFile;
 	private Button btnBack;
 	private HBox hbSendFile, buttonsEncrypt;
-	public VBox vbChatBox;
+	private VBox vbChatBox;
 	private VBox vb, areaLogo, areaFile, areaEncrypt, areaRight;
 	private ScrollPane spChatBox;
 	private CheckBox chbEncrypt;
 	private RowConstraints rowConstr1, rowConstr2, rowConstr3;
-
-	public ListView lvAvailableUsers;
-	public ListView<String> lvAttachments;
-
+	private ListView lvAvailableUsers;
+	private ListView<String> lvAttachments;
 	private boolean isChatBoxEmpty = true;
-
 	private ChatWindowFunc func;
+	
 	public static Date dateOfJoinToChat;
-
-	// StringProperty textRecu = new SimpleStringProperty();
-
 	public final static int CHAT_WIDTH = 400;
 	public final static int CHAT_HEIGHT = 500;
-
 	public static ArrayList<Label> alLabel = new ArrayList<Label>();
 	public static ArrayList<String> alMessage = new ArrayList<String>();
 	public static ArrayList<String> alKey = new ArrayList<String>();
@@ -133,15 +126,7 @@ public class ChatWindow extends BorderPane {
             }
         });
 		tfMessage.setOnKeyPressed(e -> {
-			if (e.getCode() == KeyCode.ENTER) {
-				if (this.getEncryptionCheckbox())
-					func.sendMessage(Main.nickname + "+" + tfMessage.getText() + "$" + this.getEncryptionKey());
-				else
-					func.sendMessage(Main.nickname + "+" + tfMessage.getText());
-				func.printingDate();
-				func.addMessageToChatBox(Main.nickname, tfMessage.getText(), false);
-				tfMessage.setText("");
-			}
+			func.pressEnterToSendMessage(e);
 		});
 
 		lvAvailableUsers = new ListView(Main.olNames);
@@ -209,16 +194,7 @@ public class ChatWindow extends BorderPane {
 		btnBack = new Button("back");
 		btnBack.setId("btnBack");
 		btnBack.setOnAction(e -> {
-			func.removeUserFromUserBox(Main.nickname);
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			Client.send("$2" + Main.nickname);
-			SwitchScene sc = Main.getSwitchScene();
-			sc.goToLogin();
+			func.clickBtnBack();
 		});
 		gp.add(btnBack, 0, 4);
 
@@ -259,6 +235,18 @@ public class ChatWindow extends BorderPane {
 
 	public ListView<String> getLvAttachments() {
 		return lvAttachments;
+	}
+	
+	public Button getBtnChooseFile() {
+		return btnChooseFile;
+	}
+	
+	public String getTfMessage() {
+		return tfMessage.getText();
+	}
+	
+	public void setTfMessage(String message) {
+		tfMessage.setText(message);
 	}
 
 	public boolean getEncryptionCheckbox() {

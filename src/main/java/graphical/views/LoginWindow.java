@@ -42,17 +42,14 @@ public class LoginWindow extends BorderPane {
 		gp.setHgap(10);
 		gp.setVgap(10);
 		gp.setPadding(new Insets(25, 25, 25, 25));
-
 		lbLoginTitle = new Label("Join to cryptoChat!");
 		lbLoginTitle.setId("lbLoginTitle");
 		gp.add(lbLoginTitle, 2, 2, 2, 1);
 		gp.setHalignment(lbLoginTitle, HPos.CENTER);
-
 		setUpLogo();
 		setUpLoginFields();
 		setUpButtons();
 		setUpAuthors();
-
 		columnConstr1 = new ColumnConstraints();
 		columnConstr2 = new ColumnConstraints();
 		columnConstr2.setMinWidth(25);
@@ -60,18 +57,15 @@ public class LoginWindow extends BorderPane {
 		columnConstr4 = new ColumnConstraints();
 		columnConstr4.setHalignment(HPos.RIGHT);
 		gp.getColumnConstraints().addAll(columnConstr1, columnConstr2, columnConstr3, columnConstr4);
-
 		return gp;
 	}
 	
 	private void setUpLogo() {
-
 		Image imageLogo = new Image(ClassLoader.getSystemResourceAsStream("chat-logo.png"));
 		ImageView imageViewLogo = new ImageView(imageLogo);
 		imageViewLogo.setFitHeight(161);
 		imageViewLogo.setFitWidth(250);
 		gp.add(imageViewLogo, 0, 1, 1, 5);
-
 		Image imageName = new Image(ClassLoader.getSystemResourceAsStream("chat-name.png"));
 		ImageView imageViewName = new ImageView(imageName);
 		HBox hbImageName = new HBox(imageViewName);
@@ -82,13 +76,10 @@ public class LoginWindow extends BorderPane {
 	private void setUpLoginFields() {
 		lbUser = new Label("USERNAME:");
 		gp.add(lbUser, 2, 3);
-
 		tfUser = new TextField();
 		gp.add(tfUser, 3, 3);
-
 		lbPassword = new Label("PASSWORD:");
 		gp.add(lbPassword, 2, 4);
-
 		pfPassword = new PasswordField();
 		gp.add(pfPassword, 3, 4);
 		pfPassword.setOnAction(e -> {
@@ -103,16 +94,13 @@ public class LoginWindow extends BorderPane {
 			SwitchScene sc = Main.getSwitchScene();
 			sc.goToRegister();
 		});
-
 		loginButton = new Button("LOGIN");
 		loginButton.setId("loginButton");
 		loginButton.setOnAction(e -> func.login());
-		
 		hb = new HBox(registerButton, loginButton);
 		hb.setAlignment(Pos.CENTER);
 		hb.setSpacing(25);
 		gp.add(hb, 2, 5, 2, 1);
-		
 	}
 	
 	private void setUpAuthors() {		
