@@ -337,8 +337,7 @@ public class ChatWindowFunc {
 	 * @author Marcin Lesniewski
 	 */
 	public static void clearChatBox() {
-		VBox vBox = new VBox();
-		view.getSpChatBox().setContent(vBox);
+		view.getVbChatBox().getChildren().clear();
 		view.setIsChatBoxEmpty(true);
 	}
 
