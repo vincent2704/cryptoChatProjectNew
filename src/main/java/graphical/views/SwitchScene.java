@@ -55,9 +55,9 @@ public class SwitchScene {
 						.orElse(ButtonType.CANCEL) == ButtonType.OK) {
 					//Client.userLoggedOut();
 					Client.send("$2" + Main.nickname);
+					stage.close();
 					JPAConnection.closeJPAConnection();
 					closeAllProcesses();
-					stage.close();
 				}
 			});
 

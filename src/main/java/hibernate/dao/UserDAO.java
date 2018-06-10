@@ -5,7 +5,7 @@ import java.net.ConnectException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
+import graphical.functions.LoginWindowFunc;
 import graphical.views.AlertBox;
 import graphical.views.SwitchScene;
 import hibernate.entities.User;
@@ -47,6 +47,7 @@ public class UserDAO {
 	 * method to check whether a given user can log into the chat window
 	 * if it can be switched to the chat window and its username is sent to another user to the chat window with available users
 	 * if it can not, the corresponding alert will be displayed with an error
+	 * if the user enters incorrect data 3 times in succession, the program is closed
 	 * @author Marcin Lesniewski
 	 * @param username name of the user who logs in
 	 * @param password password of the user who logs in
@@ -54,6 +55,7 @@ public class UserDAO {
 	public void login(String username, String password) {
 		if (checkCredentials(username, password)) {
 			System.out.println("zalogowano");
+			LoginWindowFunc.loginCounter = 0;
 			Main.nickname = username;
 			if (!Main.olNames.contains(username)) {
 				Main.olNames.add(username);
@@ -68,7 +70,13 @@ public class UserDAO {
 			}
 			Client.send("$3");
 		} else {
-			AlertBox.showAndWait(AlertType.ERROR, "User not exist!", "Check login and password you entered!");
+			LoginWindowFunc.loginCounter++;
+			if (LoginWindowFunc.loginCounter == 3) {
+				AlertBox.showAndWait(AlertType.ERROR, "LOGIN FAILED 3 TIMES!", "You are logged out of the chat!");
+				SwitchScene.getStage().close();
+			} else {
+				AlertBox.showAndWait(AlertType.ERROR, "User not exist!", "Check login and password you entered!");
+			}
 		}
 	}
 

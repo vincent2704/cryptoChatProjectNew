@@ -28,9 +28,6 @@ public class LoginWindow extends BorderPane {
 	private Button registerButton, loginButton;
 	private HBox hb;
 	private ColumnConstraints columnConstr1, columnConstr2, columnConstr3, columnConstr4;
-	// do dopisania licznik logowan do 3 razy tak jak ponizej w przykladzie z
-	// plikiem
-	private int loginCounter = 0;
 	private LoginWindowFunc func;
 
 
@@ -145,26 +142,4 @@ public class LoginWindow extends BorderPane {
 		return pfPassword.getText();
 	}
 	
-
-	
-	// METODA LOGOWANIA PRZEZ PLIK
-//	private void loginButton_Click() throws FileNotFoundException {
-//
-//		UsersDB usersDB = new UsersDB();
-//		usersDB.readUsers(userTextField.getText(), pwBox.getText());
-//		if (usersDB.getFlag()) {
-//			Main.nickname = userTextField.getText();
-//			SwitchScene.goToChat();
-//		} else {
-//			userTextField.setText("");
-//			pwBox.setText("");
-//			AlertBox.showAndWait(AlertType.ERROR, "LOGIN FAILED", "Check Your Login of Password.");
-//			loginCounter++;
-//			if (loginCounter == 3) {
-//				AlertBox.showAndWait(AlertType.ERROR, "LOGIN FAILED 3 TIMES!", "You must leave the chat.");
-//				SwitchScene.stage.close();
-//			}
-//		}
-//	}
-
 }

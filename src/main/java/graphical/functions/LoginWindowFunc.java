@@ -10,9 +10,16 @@ public class LoginWindowFunc {
 	
 	private LoginWindow view;
 	private UserDAO udao = new UserDAO();
+	/**
+	 * static field used to store the number of login attempts
+	 * @author Marcin Lesniewski
+	 */
+	public static int loginCounter;
+	
 	
 	public LoginWindowFunc(LoginWindow loginWindow) {
 		view = loginWindow;
+		loginCounter = 0;
 	}
 
 	/**
