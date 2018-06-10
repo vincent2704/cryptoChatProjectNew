@@ -1,38 +1,38 @@
 
 .root {
-    -fx-background: rgb(255, 229, 229);
-    -fx-border-color: rgb(68, 0, 0);
+    -fx-background: rgb(231, 253, 235);
+    -fx-border-color: rgb(32, 48, 32);
     -fx-border-width: 2pt;
 }
 
 .button {
 	-fx-font-weight: bold;
-	-fx-text-fill: rgb(234, 190, 190);
-	-fx-background-color: rgb(68, 0, 0);
-	-fx-border-color: rgb(68, 0, 0);
+	-fx-text-fill: rgb(165, 245, 180);
+	-fx-background-color: rgb(32, 48, 32);
+	-fx-border-color: rgb(32, 48, 32);
 }
 
 .button:hover {
-	-fx-text-fill: rgb(255, 255, 255);
-    -fx-background-color: rgb(33, 1, 1);
-    -fx-cursor: hand;
+	-fx-text-fill: white;
+	-fx-background-color: rgb(28, 43, 27);
+	-fx-cursor: hand;
 }
 
 .label {
 	-fx-font-weight: bold;
-	-fx-text-fill: rgb(68, 0, 0);
+	-fx-text-fill: rgb(32, 48, 32);
 }
 
 .text-field {
-	-fx-text-fill: rgb(68, 0, 0);
-	-fx-prompt-text-fill: rgb(178, 51, 51);
-	-fx-background-color: rgb(252, 196, 196);
-	-fx-border-color: rgb(68, 0, 0);
+	-fx-text-fill: rgb(32, 48, 32);
+	-fx-prompt-text-fill: rgb(49, 161, 54);
+	-fx-background-color: rgb(192, 248, 203);
+	-fx-border-color: rgb(32, 48, 32);
 }
 
 .check-box .box {
-    -fx-background-color: rgb(255, 181, 181);
-    -fx-border-color: rgb(68, 0, 0);
+    -fx-background-color: rgb(127, 241, 149);
+    -fx-border-color: rgb(32, 48, 32);
     -fx-pref-height: 15pt;
     -fx-pref-width: 15pt;
 }
@@ -40,28 +40,28 @@
     -fx-background-color: white;
 }
 .check-box:selected .box {
-    -fx-background-color: rgb(68, 0, 0);
+    -fx-background-color: rgb(32, 48, 32);
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: rgb(191, 5, 5);
+    -fx-background-color: rgb(16, 110, 25);
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 .list-cell {
     -fx-font-weight: bold;
-	-fx-text-fill: rgb(68, 0, 0);
+	-fx-text-fill: rgb(32, 48, 32);
 }
 .list-cell:odd {
-    -fx-cell-hover-color: rgb(255, 181, 181);
-    -fx-background-color: rgb(252, 209, 209);
+    -fx-cell-hover-color: rgb(127, 241, 149);
+    -fx-background-color: rgb(217, 251, 223);
 }
 .list-cell:even { 
-    -fx-cell-hover-color: rgb(252, 209, 209);
-    -fx-background-color: rgb(255, 181, 181);
+    -fx-cell-hover-color: rgb(217, 251, 223);
+    -fx-background-color: rgb(127, 241, 149);
 }
 .list-cell:filled:hover {
-    -fx-cell-hover-color: rgb(252, 209, 209);
+    -fx-cell-hover-color: rgb(217, 251, 223);
     -fx-text-fill: black;
 }
 
@@ -69,11 +69,11 @@
 #btnBack {
     -fx-padding: 2pt;
     -fx-pref-width: 50pt;
-    -fx-text-fill: rgb(68, 0, 0);
-	-fx-background-color: rgb(247, 145, 145);
+    -fx-text-fill: rgb(32, 48, 32);
+	-fx-background-color: rgb(85, 237, 114);
 }
 #btnBack:hover {
-	-fx-background-color: rgb(255, 96, 96);
+	-fx-background-color: rgb(57, 189, 63);
 }
 
 

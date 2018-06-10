@@ -27,7 +27,7 @@ public class Client {
 	 */
 	public static void createClient() {
 		try {
-			socket = new Socket("localhost", 8006);
+			socket = new Socket("localhost", 8007);
 			pw = new PrintWriter(socket.getOutputStream(), true);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -26,7 +26,7 @@ public class Server {
 		this.func = func;
 	}
 
-	private static int portNumber = 8007;
+	private static int portNumber = 8006;
 
 	public void receive() {
 		try (ServerSocket serverSocket = new ServerSocket(portNumber);
@@ -44,6 +44,11 @@ public class Server {
 		}
 	}
 
+	/**
+	 * method specifying the type of message transmission
+	 * method determines what the program should do when it receives a message
+	 * @author Marcin Lesniewski
+	 */
 	private void setKindOfMessage() {
 		Platform.runLater(() -> {
 			if (inputLine.contains("+")) {

@@ -16,6 +16,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import main.Main;
 
+/**
+ * class representing the application login window
+ */
 public class LoginWindow extends BorderPane {
 
 	private GridPane gp;
@@ -33,9 +36,15 @@ public class LoginWindow extends BorderPane {
 
 	public LoginWindow() {
 		func = new LoginWindowFunc(this);
+		setTop(SwitchScene.setMenuBar());
 		setCenter(setGridPane());
 	}
 
+	/**
+	 * method creating the application login window
+	 * @author Marcin Lesniewski
+	 * @return gridPane application login window
+	 */
 	private GridPane setGridPane() {
 		gp = new GridPane();
 		gp.setAlignment(Pos.CENTER);
@@ -60,6 +69,10 @@ public class LoginWindow extends BorderPane {
 		return gp;
 	}
 	
+	/**
+	 * method that loads photos: logo and name
+	 * @author Marcin Lesniewski
+	 */
 	private void setUpLogo() {
 		Image imageLogo = new Image(ClassLoader.getSystemResourceAsStream("chat-logo.png"));
 		ImageView imageViewLogo = new ImageView(imageLogo);
@@ -73,6 +86,10 @@ public class LoginWindow extends BorderPane {
 		gp.add(hbImageName, 0, 0, 4, 1);
 	}
 	
+	/**
+	 * method that loads login fields
+	 * @author Marcin Lesniewski
+	 */
 	private void setUpLoginFields() {
 		lbUser = new Label("USERNAME:");
 		gp.add(lbUser, 2, 3);
@@ -87,6 +104,10 @@ public class LoginWindow extends BorderPane {
 		});
 	}
 
+	/**
+	 * method that loads buttons
+	 * @author Marcin Lesniewski
+	 */
 	private void setUpButtons() {		
 		registerButton = new Button("REGISTER");
 		registerButton.setId("registerButton");
@@ -103,6 +124,10 @@ public class LoginWindow extends BorderPane {
 		gp.add(hb, 2, 5, 2, 1);
 	}
 	
+	/**
+	 * method that loads information about authors
+	 * @author Marcin Lesniewski
+	 */
 	private void setUpAuthors() {		
 		lbAuthors = new Label("project on Politechnika Warszawska "
 				+ "\"Java EE - produkcja oprogramowania\"\n"

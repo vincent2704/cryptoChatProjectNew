@@ -15,6 +15,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import main.Main;
 
+/**
+ * class representing the application register window
+ */
 public class RegisterWindow extends BorderPane {
 
 	private GridPane gp;
@@ -26,9 +29,15 @@ public class RegisterWindow extends BorderPane {
 
 	public RegisterWindow() {
 		func = new RegisterWindowFunc(this);
+		setTop(SwitchScene.setMenuBar());
 		setCenter(setGridPane());
 	}
 
+	/**
+	 * method creating the application register window
+	 * @author Marcin Lesniewski
+	 * @return gridPane application register window
+	 */
 	private GridPane setGridPane() {
 		gp = new GridPane();
 		gp.setAlignment(Pos.CENTER);
@@ -63,6 +72,10 @@ public class RegisterWindow extends BorderPane {
 		return gp;
 	}
 
+	/**
+	 * method that loads register fields
+	 * @author Marcin Lesniewski
+	 */
 	private void setUpRegisterFields() {
 		lbUser = new Label("USERNAME:");
 		gp.add(lbUser, 0, 2);

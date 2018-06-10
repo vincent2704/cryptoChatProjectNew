@@ -10,7 +10,15 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	static Stage stage;
+	/**
+	 * static field for the username of the user currently using the chat
+	 * @author Marcin Lesniewski
+	 */
 	public static String nickname = "";
+	/**
+	 * static field that specifies the list of users currently using chat
+	 * @author Marcin Lesniewski
+	 */
 	public static ObservableList olNames;
 	private static SwitchScene sc;
 

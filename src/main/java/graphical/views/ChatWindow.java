@@ -20,8 +20,6 @@ import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -32,6 +30,9 @@ import javafx.scene.layout.VBox;
 import main.Main;
 import sockets.Client;
 
+/**
+ * class representing the application chat window
+ */
 public class ChatWindow extends BorderPane {
 
 	private MenuBar menuBar;
@@ -53,36 +54,52 @@ public class ChatWindow extends BorderPane {
 	private ListView<String> lvAttachments;
 	private boolean isChatBoxEmpty = true;
 	private ChatWindowFunc func;
-	
+	/**
+	 * static field containing the date of joining the chat
+	 * this field can be exchanged for the current date which will be different from the date when the chat was started
+	 * @author Marcin Lesniewski
+	 */
 	public static Date dateOfJoinToChat;
+	/**
+	 * static field containing the width of the chat window portion to display the message
+	 * @author Marcin Lesniewski
+	 */
 	public final static int CHAT_WIDTH = 400;
+	/**
+	 * static field containing the height of the chat window portion to display the message
+	 * @author Marcin Lesniewski
+	 */
 	public final static int CHAT_HEIGHT = 500;
+	/**
+	 * static field with encrypted incoming messages containing arraylist with labels in which there are messages
+	 * @author Marcin Lesniewski
+	 */
 	public static ArrayList<Label> alLabel = new ArrayList<Label>();
+	/**
+	 * static field with encrypted incoming messages containing arraylist with message content
+	 * @author Marcin Lesniewski
+	 */
 	public static ArrayList<String> alMessage = new ArrayList<String>();
+	/**
+	 * static field with encrypted incoming messages containing arraylists with decryption keys
+	 * @author Marcin Lesniewski
+	 */
 	public static ArrayList<String> alKey = new ArrayList<String>();
 
 	public ChatWindow() {
 		func = new ChatWindowFunc(this);
-		setTop(setMenuBar());
+		setTop(SwitchScene.setMenuBarChat());
 		setCenter(setGridPane());
 		func.concurrentReceive();
 		dateOfJoinToChat = new Date();
 	}
 
-	private MenuBar setMenuBar() {
-		menuBar = new MenuBar();
-		menuChat = new Menu("_Chat");
-		menuLoadHistory = new MenuItem("_Load History");
-		menuLoadHistory.setAccelerator(KeyCombination.keyCombination("Ctrl+L"));
-		menuLoadHistory.setOnAction(e -> func.loadHistory());
-		menuClearChat = new MenuItem("_Clear Chat");
-		menuClearChat.setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
-		menuClearChat.setOnAction(e -> func.clearHistoryAtChatBox());
-		menuChat.getItems().addAll(menuLoadHistory, menuClearChat);
-		menuBar.getMenus().addAll(menuChat);
-		return menuBar;
-	}
-
+	/**
+	 * method creating the application chat window
+	 * @author Marcin Lesniewski
+	 * @return gridPane application chat window
+	 * @throws InterruptedException due to Thread.sleep()
+	 */
 	private GridPane setGridPane() {
 
 		gp = new GridPane();
@@ -208,6 +225,12 @@ public class ChatWindow extends BorderPane {
 
 	}
 
+	/**
+	 * method showing the options for encrypting messages by pressing the right mouse button
+	 * @author Marcin Lesniewski
+	 * @param e mouse event after pressing the right mouse button
+	 * @deprecated
+	 */
 	public void showMessageOptions(MouseEvent e) {
 		if (e.getButton() == MouseButton.SECONDARY) {
 			final ContextMenu contextMenu = new ContextMenu();
@@ -241,10 +264,20 @@ public class ChatWindow extends BorderPane {
 		return btnChooseFile;
 	}
 	
+	/**
+	 * method that returns the contents of the text field with the message just written
+	 * @author Marcin Lesniewski
+	 * @return
+	 */
 	public String getTfMessage() {
 		return tfMessage.getText();
 	}
 	
+	/**
+	 * method that sets the contents of the text field to the one given as a parameter
+	 * @author Marcin Lesniewski
+	 * @param message
+	 */
 	public void setTfMessage(String message) {
 		tfMessage.setText(message);
 	}

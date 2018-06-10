@@ -44,9 +44,12 @@ public class UserDAO {
 	}
 	
 	/**
-	 * Uses {@link #checkCredentials(String, String)} to confirm user name and password and then switches Scene to ChatWindow.
-	 * @param username
-	 * @param password
+	 * method to check whether a given user can log into the chat window
+	 * if it can be switched to the chat window and its username is sent to another user to the chat window with available users
+	 * if it can not, the corresponding alert will be displayed with an error
+	 * @author Marcin Lesniewski
+	 * @param username name of the user who logs in
+	 * @param password password of the user who logs in
 	 */
 	public void login(String username, String password) {
 		if (checkCredentials(username, password)) {
@@ -61,7 +64,6 @@ public class UserDAO {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Client.send("$3");
