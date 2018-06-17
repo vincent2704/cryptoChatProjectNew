@@ -8,9 +8,9 @@
       <class>hibernate.entities.User</class>
       <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7242240" />
-            <property name="javax.persistence.jdbc.user" value="sql7242240" />
-            <property name="javax.persistence.jdbc.password" value="vZr7dB4jE8" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7243324" />
+            <property name="javax.persistence.jdbc.user" value="sql7243324" />
+            <property name="javax.persistence.jdbc.password" value="ZZlINksTtd" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="create" />

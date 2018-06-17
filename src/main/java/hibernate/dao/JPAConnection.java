@@ -4,6 +4,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import graphical.views.AlertBox;
+import graphical.views.SwitchScene;
+import javafx.scene.control.Alert.AlertType;
+
 public class JPAConnection {
 
 	private static EntityManagerFactory emf;
