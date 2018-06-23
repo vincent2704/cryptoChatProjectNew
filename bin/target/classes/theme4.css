@@ -1,0 +1,156 @@
+
+.root {
+    -fx-background: rgb(247, 249, 161);
+    -fx-border-color: rgb(125, 133, 17);
+    -fx-border-width: 2pt;
+}
+
+.button {
+	-fx-font-weight: bold;
+	-fx-text-fill: rgb(231, 244, 104);
+	-fx-background-color: rgb(125, 133, 17);
+	-fx-border-color: rgb(125, 133, 17);
+}
+
+.button:hover {
+	-fx-text-fill: white;
+	-fx-background-color: rgb(92, 98, 14);
+	-fx-cursor: hand;
+}
+
+.label {
+	-fx-font-weight: bold;
+	-fx-text-fill: rgb(125, 133, 17);
+}
+
+.text-field {
+	-fx-text-fill: rgb(125, 133, 17);
+	-fx-prompt-text-fill: rgb(212, 212, 18);
+	-fx-background-color: rgb(234, 250, 138);
+	-fx-border-color: rgb(125, 133, 17);
+}
+
+.check-box .box {
+    -fx-background-color: rgb(239, 245, 161);
+    -fx-border-color: rgb(125, 133, 17);
+    -fx-pref-height: 15pt;
+    -fx-pref-width: 15pt;
+}
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+.check-box:selected .box {
+    -fx-background-color: rgb(125, 133, 17);
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: rgb(156, 179, 21);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.list-cell {
+    -fx-font-weight: bold;
+	-fx-text-fill: rgb(125, 133, 17);
+}
+.list-cell:odd {
+    -fx-cell-hover-color: rgb(239, 245, 161);
+    -fx-background-color: rgb(232, 248, 154);
+}
+.list-cell:even { 
+    -fx-cell-hover-color: rgb(232, 248, 154);
+    -fx-background-color: rgb(239, 245, 161);
+}
+.list-cell:filled:hover {
+    -fx-cell-hover-color: rgb(232, 248, 154);
+    -fx-text-fill: black;
+}
+
+/* button back in register-window and chat-window */
+#btnBack {
+    -fx-padding: 2pt;
+    -fx-pref-width: 50pt;
+    -fx-text-fill: rgb(125, 133, 17);
+	-fx-background-color: rgb(229, 236, 140);
+}
+#btnBack:hover {
+	-fx-background-color: rgb(187, 233, 17);
+}
+
+
+/* REGISTER WINDOW */
+
+#lbRegisterTitle {
+    -fx-font: 16pt "Tahoma";
+    -fx-padding: 6pt;
+}
+
+#createUserButton {
+    -fx-pref-width: 85pt;
+}
+
+
+/* LOGIN WINDOW */
+
+#lbLoginTitle {
+	-fx-font: bold 14pt "Tahoma";
+    -fx-padding: 6pt;
+}
+
+#registerButton {
+    -fx-pref-width: 68pt;
+}
+
+#loginButton {
+    -fx-pref-width: 55pt;
+}
+
+#lbAuthors {
+	-fx-font: bold 7pt "Verdana";
+	-fx-text-fill: rgb(12, 34, 71);
+    -fx-padding: 2pt;
+    -fx-text-alignment: center;
+    -fx-padding: 15pt;
+}
+
+
+/* CHAT WINDOW */
+
+#lbsChat {
+	-fx-font: bold 10pt "Verdana";
+    -fx-padding: 2pt;
+}
+
+
+/* FUNCTIONS CHAT WINDOW */
+
+#lbUser {
+	-fx-font: bold 10pt "Helvetica";
+	-fx-text-fill: blue;
+}
+
+#lbMessage {
+	-fx-font: bold 10pt "Helvetica";
+	-fx-text-fill: black;
+	-fx-wrap-text: true;
+}
+
+#lbDate {
+	-fx-font: 7pt "Helvetica";
+	-fx-text-fill: rgb(107, 41, 173);
+}
+
+#vbMessage {
+	-fx-padding: 10pt;
+}
+
+#printDate {
+	-fx-font: bold 9pt "Helvetica";
+	-fx-text-fill: rgb(124, 0, 155);
+}
+
+#userLogged {
+	-fx-font: 7pt "Helvetica";
+	-fx-text-fill: black;
+}
+
+

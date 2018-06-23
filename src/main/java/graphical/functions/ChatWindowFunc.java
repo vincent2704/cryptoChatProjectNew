@@ -70,39 +70,6 @@ public class ChatWindowFunc {
 	}
 
 	/**
-	 * method for the button that selects the photo file
-	 * method adds the selected file to the list of files waiting to be sent
-	 * @author Marcin Lesniewski
-	 */
-	public void chooseFile() {
-		FileChooser fc = new FileChooser();
-		ExtensionFilter extFilterJPG = new ExtensionFilter("JPG files (*.jpg)", "*.JPG");
-		ExtensionFilter extFilterPNG = new ExtensionFilter("PNG files (*.png)", "*.PNG");
-		fc.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
-		File selectedFile = fc.showOpenDialog(SwitchScene.getStage());
-		String fileName = selectedFile.getName();
-		if (selectedFile != null) {
-			view.getBtnChooseFile().setText(fileName);
-			view.getLvAttachments().getItems().add(selectedFile.getAbsolutePath());
-			System.out.println(view.getLvAttachments());
-		} else {
-			AlertBox.showAndWait(AlertType.ERROR, "", "File selection error!");
-		}
-	}
-	
-	public void addAttachment() {
-		ListView<String> attachments = view.getLvAttachments();
-		FileChooser fc = new FileChooser();
-		File selectedFile = fc.showOpenDialog(SwitchScene.getStage());
-		if (selectedFile != null) {
-			attachments.getItems().add(selectedFile.getAbsolutePath());
-			System.out.println(attachments);
-		} else {
-			AlertBox.showAndWait(AlertType.ERROR, "", "File selection error!");
-		}
-	}
-
-	/**
 	 * method specifying how to send a message after clicking enter in the text field
 	 * method determines the action when the message is encrypted and when it is not encrypted
 	 * @author Marcin Lesniewski

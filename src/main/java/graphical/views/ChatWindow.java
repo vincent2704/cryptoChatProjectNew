@@ -16,6 +16,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,12 +42,10 @@ public class ChatWindow extends BorderPane {
 	private GridPane gp;
 	private Label lbUsers, lbChat, lbFile, lbEncrypt;
 	private TextField tfMessage, tfEncrypt;
-	private Button btnChooseFile;
-	private Button btnSendFile;
 	private Button btnBack;
 	private HBox hbSendFile, buttonsEncrypt;
 	private VBox vbChatBox;
-	private VBox vb, areaLogo, areaFile, areaEncrypt, areaRight;
+	private VBox vb, areaLogo, areaEncrypt, areaRight;
 	private ScrollPane spChatBox;
 	private CheckBox chbEncrypt;
 	private RowConstraints rowConstr1, rowConstr2, rowConstr3;
@@ -55,33 +54,45 @@ public class ChatWindow extends BorderPane {
 	private boolean isChatBoxEmpty = true;
 	private ChatWindowFunc func;
 	/**
-	 * static field containing the date of joining the chat
-	 * this field can be exchanged for the current date which will be different from the date when the chat was started
+	 * static field containing the date of joining the chat this field can be
+	 * exchanged for the current date which will be different from the date when
+	 * the chat was started
+	 * 
 	 * @author Marcin Lesniewski
 	 */
 	public static Date dateOfJoinToChat;
 	/**
-	 * static field containing the width of the chat window portion to display the message
+	 * static field containing the width of the chat window portion to display
+	 * the message
+	 * 
 	 * @author Marcin Lesniewski
 	 */
 	public final static int CHAT_WIDTH = 400;
 	/**
-	 * static field containing the height of the chat window portion to display the message
+	 * static field containing the height of the chat window portion to display
+	 * the message
+	 * 
 	 * @author Marcin Lesniewski
 	 */
 	public final static int CHAT_HEIGHT = 500;
 	/**
-	 * static field with encrypted incoming messages containing arraylist with labels in which there are messages
+	 * static field with encrypted incoming messages containing arraylist with
+	 * labels in which there are messages
+	 * 
 	 * @author Marcin Lesniewski
 	 */
 	public static ArrayList<Label> alLabel = new ArrayList<Label>();
 	/**
-	 * static field with encrypted incoming messages containing arraylist with message content
+	 * static field with encrypted incoming messages containing arraylist with
+	 * message content
+	 * 
 	 * @author Marcin Lesniewski
 	 */
 	public static ArrayList<String> alMessage = new ArrayList<String>();
 	/**
-	 * static field with encrypted incoming messages containing arraylists with decryption keys
+	 * static field with encrypted incoming messages containing arraylists with
+	 * decryption keys
+	 * 
 	 * @author Marcin Lesniewski
 	 */
 	public static ArrayList<String> alKey = new ArrayList<String>();
@@ -96,9 +107,11 @@ public class ChatWindow extends BorderPane {
 
 	/**
 	 * method creating the application chat window
+	 * 
 	 * @author Marcin Lesniewski
 	 * @return gridPane application chat window
-	 * @throws InterruptedException due to Thread.sleep()
+	 * @throws InterruptedException
+	 *             due to Thread.sleep()
 	 */
 	private GridPane setGridPane() {
 
@@ -137,11 +150,11 @@ public class ChatWindow extends BorderPane {
 		tfMessage.setPromptText("type here your message");
 		gp.add(tfMessage, 0, 2);
 		tfMessage.setOnKeyTyped(e -> {
-            char inputChar = e.getCharacter().charAt(0);
-            if (inputChar=='$') {
-                e.consume();
-            }
-        });
+			char inputChar = e.getCharacter().charAt(0);
+			if (inputChar == '$') {
+				e.consume();
+			}
+		});
 		tfMessage.setOnKeyPressed(e -> {
 			func.pressEnterToSendMessage(e);
 		});
@@ -151,7 +164,10 @@ public class ChatWindow extends BorderPane {
 		lvAvailableUsers.setOnMouseClicked(e -> {
 			if (e.getButton().equals(MouseButton.PRIMARY)) {
 				if (e.getClickCount() == 2) {
-					System.out.println("clicked on " + lvAvailableUsers.getSelectionModel().getSelectedItem());
+					// System.out.println("clicked on " +
+					// lvAvailableUsers.getSelectionModel().getSelectedItem());
+					AlertBox.showAndWait(AlertType.INFORMATION, "", "User "
+							+ lvAvailableUsers.getSelectionModel().getSelectedItem() + " is available on chat.");
 				}
 			}
 		});
@@ -163,24 +179,6 @@ public class ChatWindow extends BorderPane {
 		areaLogo = new VBox(imageViewLogo);
 		areaLogo.setAlignment(Pos.CENTER);
 		areaLogo.setPadding(new Insets(20, 20, 20, 20));
-
-		lbFile = new Label("SEND FILE:");
-		lbFile.setId("lbsChat");
-
-		btnChooseFile = new Button("choose image file");
-		btnChooseFile.setPrefWidth(250);
-		btnChooseFile.setOnAction(e -> {
-			func.chooseFile();
-		});
-
-		btnSendFile = new Button("send");
-		btnSendFile.setPrefWidth(70);
-		hbSendFile = new HBox(btnSendFile);
-		hbSendFile.setAlignment(Pos.BASELINE_RIGHT);
-
-		areaFile = new VBox(lbFile, btnChooseFile, hbSendFile);
-		areaFile.setPadding(new Insets(10, 0, 10, 0));
-		areaFile.setSpacing(5);
 
 		lbEncrypt = new Label("ENCRYPT MESSAGE:");
 		lbEncrypt.setId("lbsChat");
@@ -203,7 +201,7 @@ public class ChatWindow extends BorderPane {
 		areaEncrypt = new VBox(lbEncrypt, buttonsEncrypt);
 		areaEncrypt.setSpacing(5);
 
-		areaRight = new VBox(lbUsers, lvAvailableUsers, areaLogo, areaFile, areaEncrypt);
+		areaRight = new VBox(lbUsers, lvAvailableUsers, areaLogo, areaEncrypt);
 		areaRight.setSpacing(5);
 
 		gp.add(areaRight, 2, 0, 1, 3);
@@ -226,9 +224,12 @@ public class ChatWindow extends BorderPane {
 	}
 
 	/**
-	 * method showing the options for encrypting messages by pressing the right mouse button
+	 * method showing the options for encrypting messages by pressing the right
+	 * mouse button
+	 * 
 	 * @author Marcin Lesniewski
-	 * @param e mouse event after pressing the right mouse button
+	 * @param e
+	 *            mouse event after pressing the right mouse button
 	 * @deprecated
 	 */
 	public void showMessageOptions(MouseEvent e) {
@@ -259,22 +260,22 @@ public class ChatWindow extends BorderPane {
 	public ListView<String> getLvAttachments() {
 		return lvAttachments;
 	}
-	
-	public Button getBtnChooseFile() {
-		return btnChooseFile;
-	}
-	
+
 	/**
-	 * method that returns the contents of the text field with the message just written
+	 * method that returns the contents of the text field with the message just
+	 * written
+	 * 
 	 * @author Marcin Lesniewski
 	 * @return
 	 */
 	public String getTfMessage() {
 		return tfMessage.getText();
 	}
-	
+
 	/**
-	 * method that sets the contents of the text field to the one given as a parameter
+	 * method that sets the contents of the text field to the one given as a
+	 * parameter
+	 * 
 	 * @author Marcin Lesniewski
 	 * @param message
 	 */

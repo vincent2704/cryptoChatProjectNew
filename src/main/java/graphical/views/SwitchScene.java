@@ -94,7 +94,7 @@ public class SwitchScene {
 		lgWin.getStylesheets().clear();
 		lgWin.getStylesheets().add(stylesheetName);
 		stage.setScene(scLogin);
-		// stage.centerOnScreen();
+		stage.centerOnScreen();
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class SwitchScene {
 		rgWin.getStylesheets().clear();
 		rgWin.getStylesheets().add(stylesheetName);
 		stage.setScene(scRegister);
-		// stage.centerOnScreen();
+		stage.centerOnScreen();
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class SwitchScene {
 		chWin.getStylesheets().clear();
 		chWin.getStylesheets().add(stylesheetName);
 		stage.setScene(scChat);
-		// stage.centerOnScreen();
+		stage.centerOnScreen();
 	}
 	
 	/**

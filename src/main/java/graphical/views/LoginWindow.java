@@ -28,11 +28,8 @@ public class LoginWindow extends BorderPane {
 	private Button registerButton, loginButton;
 	private HBox hb;
 	private ColumnConstraints columnConstr1, columnConstr2, columnConstr3, columnConstr4;
-	// do dopisania licznik logowan do 3 razy tak jak ponizej w przykladzie z
-	// plikiem
 	private int loginCounter = 0;
 	private LoginWindowFunc func;
-
 
 	public LoginWindow() {
 		func = new LoginWindowFunc(this);

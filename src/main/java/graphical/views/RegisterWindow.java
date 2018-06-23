@@ -61,9 +61,6 @@ public class RegisterWindow extends BorderPane {
 		createUserButton.setId("createUserButton");
 		gp.add(createUserButton, 1, 4);
 		gp.setHalignment(createUserButton, HPos.CENTER);	
-		//stara wersja metody pod JDBC
-		//createUserButton.setOnAction(e -> func.createUser());
-		//wersja Hibernate
 		createUserButton.setOnAction(e -> func.registerUser());
 		btnBack.setOnAction(e -> {
 			SwitchScene sc = Main.getSwitchScene();
