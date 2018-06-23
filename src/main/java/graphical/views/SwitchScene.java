@@ -51,12 +51,16 @@ public class SwitchScene {
 		stage.setOnCloseRequest(e -> {
 			e.consume();
 			Platform.runLater(() -> {
-				if (AlertBox.showAndWait(AlertType.CONFIRMATION, "", "Do you exit Chat?")
+				if (AlertBox.showAndWait(AlertType.CONFIRMATION, "", "Are you sure?")
 						.orElse(ButtonType.CANCEL) == ButtonType.OK) {
-					//Client.userLoggedOut();
-					Client.send("$2" + Main.nickname);
-					closeAllProcesses();
+					try {
+						Client.send("$2" + Main.nickname);						
+					}catch(NullPointerException exc) {
+						stage.close();
+						closeAllProcesses();
+					}
 					stage.close();
+					closeAllProcesses();
 				}
 			});
 
